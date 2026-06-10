@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI东南亚电商实景换 | Shopee/TikTok高点击主图 - Corelinkbase</title>
+    <meta name="description" content="东南亚华人卖家专属AI实景换图，Shopee/TikTok白底变本土场景，免费水印预览，满意再付费。">
+    <style>
+        :root { --primary: #ee4d2d; --dark: #222; --grey: #666; --light-grey: #f8f9fa; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; color: var(--dark); background: #fff; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 30px 15px; }
+
+        /* 语言切换按钮样式 */
+        .lang-switch {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 8px;
+            z-index: 100;
+        }
+        .lang-btn {
+            padding: 6px 12px;
+            border: 1px solid var(--primary);
+            background: white;
+            color: var(--primary);
+            border-radius: 4px;
+            font-size: 0.85em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .lang-btn:hover, .lang-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .hero { text-align: center; background: var(--light-grey); padding: 45px 15px; border-bottom: 4px solid var(--primary); }
+        .hero h1 { font-size: 2em; margin-bottom: 12px; }
+        .hero h1 span { color: var(--primary); }
+        .hero p {
+            font-size: 1.1em;
+            color: var(--grey);
+            max-width: 100%;
+            margin: 0 auto;
+            white-space: nowrap;
+        }
+        @media (max-width: 768px) {
+            .hero p { white-space: normal; }
+        }
+        .hero small { display:block; margin-top:10px; color:#888; font-size:0.85em; }
+
+        .comparison-section { padding: 45px 15px; text-align: center; }
+        .comparison-section h2 { font-size: 1.7em; margin-bottom: 8px; }
+        .tip { color:#888; margin-bottom:25px; font-size:0.95em; }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+        @media (max-width: 900px) { .grid-3 { grid-template-columns: repeat(2, 1fr); gap: 15px; } }
+        @media (max-width: 600px) { .grid-3 { grid-template-columns: 1fr; gap: 15px; } }
+
+        .card { padding: 0; }
+        .compare-wrap {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 1 / 1;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+            user-select: none;
+        }
+        .compare-wrap img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .after-img { clip-path: inset(0 0 0 50%); }
+        .slider-bar {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 3px;
+            height: 100%;
+            background: #fff;
+            box-shadow: 0 0 6px rgba(0,0,0,0.5);
+            transform: translateX(-50%);
+            z-index: 2;
+        }
+        .slider-handle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow: 0 0 6px rgba(0,0,0,0.5);
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--primary);
+            font-weight: bold;
+            z-index: 3;
+        }
+        .label-before, .label-after {
+            position: absolute;
+            top: 8px;
+            padding: 3px 8px;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            font-size: 0.75em;
+            border-radius: 4px;
+            z-index: 4;
+        }
+        .label-before { left: 8px; }
+        .label-after { right: 8px; }
+        .card p { margin-top:10px; font-weight: bold; color: var(--dark); font-size:0.95em; }
+
+        .benefits { background: var(--light-grey); padding: 45px 15px; }
+        .benefits h2 { text-align: center; font-size: 1.7em; margin-bottom: 30px; }
+        .benefit-list { list-style: none; padding: 0; max-width: 700px; margin: 0 auto; }
+        .benefit-list li { background: #fff; padding: 18px; margin-bottom: 12px; border-radius: 8px; border-left: 5px solid var(--primary); font-size: 1.05em; line-height: 1.5; }
+        .benefit-list li strong { color: var(--primary); }
+        .trust-badge { text-align: center; margin-top: 25px; font-size: 0.9em; color: #888; font-style: italic; }
+
+        .pricing { padding: 45px 15px; text-align: center; }
+        .pricing h2 { font-size: 1.7em; margin-bottom: 12px; }
+        .pricing-subtitle { margin-bottom: 30px; color: var(--grey); }
+        .price-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; max-width: 800px; margin: 0 auto; }
+        .price-card { border: 2px solid #eee; border-radius: 12px; padding: 25px 18px; transition: transform 0.3s; }
+        .price-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .price-card h3 { margin-top: 0; color: var(--dark); }
+        .price { font-size: 2.3em; font-weight: bold; color: var(--primary); margin: 12px 0; }
+        .price span { font-size: 0.4em; color: var(--grey); }
+        .price-card ul { list-style: none; padding: 0; text-align: left; margin-bottom: 18px; }
+        .price-card ul li { padding: 7px 0; border-bottom: 1px solid #eee; color: var(--grey); }
+        .price-card ul li::before { content: "✓ "; color: var(--primary); font-weight: bold; }
+        .tag { display: inline-block; background: #fff3cd; color: #856404; font-size: 0.75em; padding: 3px 8px; border-radius: 4px; margin-left: 5px; }
+
+        .cta { background: var(--primary); color: white; padding: 45px 15px; text-align: center; }
+        .cta h2 { font-size: 1.8em; margin-bottom: 15px; }
+        .cta-box { background: rgba(255,255,255,0.15); padding: 25px; border-radius: 12px; display: inline-block; margin-top: 15px; }
+        .email-link { font-size: 2em; color: white; text-decoration: none; font-weight: bold; display: block; margin: 8px 0; }
+        .email-link:hover { text-decoration: underline; }
+        .cta-note { font-size: 0.9em; opacity: 0.9; margin-top: 12px; }
+
+        .footer { text-align: center; padding: 25px 15px; background: #222; color: #666; font-size: 0.85em; }
+    </style>
+</head>
+<body>
+
+    <div class="lang-switch">
+        <button class="lang-btn active" data-lang="zh-CN">简体中文</button>
+        <button class="lang-btn" data-lang="zh-TW">繁體中文</button>
+        <button class="lang-btn" data-lang="en">English</button>
+        <button class="lang-btn" data-lang="vi">Tiếng Việt</button>
+        <button class="lang-btn" data-lang="th">ไทย</button>
+        <button class="lang-btn" data-lang="id">Bahasa Indonesia</button>
+    </div>
+
+    <div class="hero">
+        <div class="container">
+            <h1>别让<span>白底图</span>毁了你的虾皮点击率！</h1>
+            <p>Shopee/TikTok全站白底内卷，本土实拍贵？AI一键生成越/泰/印尼本土场景，免费水印预览，满意再付费。</p>
+            <small>Serving Chinese sellers in Vietnam/Thailand/Indonesia/Malaysia</small>
+        </div>
+    </div>
+
+    <div class="comparison-section">
+        <div class="container">
+            <h2>原图 VS AI实景 降维打击</h2>
+            <p class="tip">👈 左右拖动对比，左Before、右After 👉</p>
+            <div class="grid-3">
+
+                <div class="card">
+                    <div class="compare-wrap" data-slider>
+                        <img class="before-img" src="slipper-before.jpg" alt="Before">
+                        <img class="after-img" src="slipper-after.jpg" alt="After">
+                        <div class="slider-bar"></div>
+                        <div class="slider-handle">↔</div>
+                        <span class="label-before">Before</span>
+                        <span class="label-after">After</span>
+                    </div>
+                    <p>🇻🇳 越南街边场景</p>
+                </div>
+
+                <div class="card">
+                    <div class="compare-wrap" data-slider>
+                        <img class="before-img" src="spray-before.jpg" alt="Before">
+                        <img class="after-img" src="spray-after.jpg" alt="After">
+                        <div class="slider-bar"></div>
+                        <div class="slider-handle">↔</div>
+                        <span class="label-before">Before</span>
+                        <span class="label-after">After</span>
+                    </div>
+                    <p>🇹🇭 泰国夜市场景</p>
+                </div>
+
+                <div class="card">
+                    <div class="compare-wrap" data-slider>
+                        <img class="before-img" src="earbuds-before.jpg" alt="Before">
+                        <img class="after-img" src="earbuds-after.jpg" alt="After">
+                        <div class="slider-bar"></div>
+                        <div class="slider-handle">↔</div>
+                        <span class="label-before">Before</span>
+                        <span class="label-after">After</span>
+                    </div>
+                    <p>🇮🇩 印尼街头场景</p>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="benefits">
+        <div class="container">
+            <h2>为什么华人卖家选 Corelinkbase</h2>
+            <ul class="benefit-list">
+                <li><strong>零实拍成本，24H交付：</strong>不用模特、不用场地，上新节奏快。</li>
+                <li><strong>纯正东南亚本土氛围：</strong>不踩文化雷，转化更高。</li>
+                <li><strong>🔥 一国原图，多国场景：</strong>一次出越/泰/印尼多套图，铺货更省。</li>
+                <li><strong>免费水印预览，满意再付：</strong>零风险，先看效果。</li>
+            </ul>
+            <p class="trust-badge">🛡️ 服务覆盖越/泰/马/印尼华人跨境商家</p>
+        </div>
+    </div>
+
+    <div class="pricing">
+        <div class="container">
+            <h2>无门槛阶梯报价</h2>
+            <p class="pricing-subtitle">小铺到大店都适配</p>
+            <div class="price-cards">
+                <div class="price-card">
+                    <h3>体验套餐 <span class="tag">新手首选</span></h3>
+                    <div class="price">$24.99 <span>/ 3张</span></div>
+                    <ul>
+                        <li>3张不同场景</li>
+                        <li>指定1个国家</li>
+                        <li>3天内交付</li>
+                    </ul>
+                </div>
+                <div class="price-card">
+                    <h3>批量套餐 <span class="tag">铺货性价比</span></h3>
+                    <div class="price">$75 <span>/ 10张</span></div>
+                    <ul>
+                        <li>10张场景</li>
+                        <li>越/泰/印尼混搭</li>
+                        <li>48小时交付</li>
+                    </ul>
+                </div>
+                <div class="price-card">
+                    <h3>包月套餐 <span class="tag">精品店</span></h3>
+                    <div class="price">$199 <span>/ 月</span></div>
+                    <ul>
+                        <li>30张/月</li>
+                        <li>一国多场景</li>
+                        <li>24小时交付</li>
+                        <li>专属对接</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cta">
+        <div class="container">
+            <h2>直接看你的产品效果！</h2>
+            <p>发白底图，24h内免费水印预览，零预付</p>
+            <div class="cta-box">
+                <p>发送产品图至：</p>
+                <a href="mailto:contact@corelinkbase.com" class="email-link">contact@corelinkbase.com</a>
+                <p class="cta-note">备注：品类+国家（如：拖鞋+越南街头）</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; 2026 Corelinkbase | contact@corelinkbase.com</p>
+    </div>
+
+    <script>
+    // 多语言文本数据
+    const translations = {
+        'zh-CN': {
+            heroTitle: '别让<span>白底图</span>毁了你的虾皮点击率！',
+            heroDesc: 'Shopee/TikTok全站白底内卷，本土实拍贵？AI一键生成越/泰/印尼本土场景，免费水印预览，满意再付费。',
+            heroSubtitle: 'Serving Chinese sellers in Vietnam/Thailand/Indonesia/Malaysia',
+            comparisonTitle: '原图 VS AI实景 降维打击',
+            comparisonTip: '👈 左右拖动对比，左Before、右After 👉',
+            benefitsTitle: '为什么华人卖家选 Corelinkbase',
+            benefit1: '零实拍成本，24H交付：不用模特、不用场地，上新节奏快。',
+            benefit2: '纯正东南亚本土氛围：不踩文化雷，转化更高。',
+            benefit3: '🔥 一国原图，多国场景：一次出越/泰/印尼多套图，铺货更省。',
+            benefit4: '免费水印预览，满意再付：零风险，先看效果。',
+            trustBadge: '🛡️ 服务覆盖越/泰/马/印尼华人跨境商家',
+            pricingTitle: '无门槛阶梯报价',
+            pricingSubtitle: '小铺到大店都适配',
+            package1: '体验套餐',
+            package1Tag: '新手首选',
+            package1Price: '$24.99 <span>/ 3张</span>',
+            package1Feature1: '3张不同场景',
+            package1Feature2: '指定1个国家',
+            package1Feature3: '3天内交付',
+            package2: '批量套餐',
+            package2Tag: '铺货性价比',
+            package2Price: '$75 <span>/ 10张</span>',
+            package2Feature1: '10张场景',
+            package2Feature2: '越/泰/印尼混搭',
+            package2Feature3: '48小时交付',
+            package3: '包月套餐',
+            package3Tag: '精品店',
+            package3Price: '$199 <span>/ 月</span>',
+            package3Feature1: '30张/月',
+            package3Feature2: '一国多场景',
+            package3Feature3: '24小时交付',
+            package3Feature4: '专属对接',
+            ctaTitle: '直接看你的产品效果！',
+            ctaDesc: '发白底图，24h内免费水印预览，零预付',
+            ctaEmail: '发送产品图至：',
+            ctaNote: '备注：品类+国家（如：拖鞋+越南街头）',
+            footer: '&copy; 2026 Corelinkbase | contact@corelinkbase.com'
+        },
+        'zh-TW': {
+            heroTitle: '別讓<span>白底圖</span>毀了你的蝦皮點擊率！',
+            heroDesc: 'Shopee/TikTok全站白底內卷，本土實拍貴？AI一鍵生成越/泰/印尼本土場景，免費水印預覽，滿意再付費。',
+            heroSubtitle: 'Serving Chinese sellers in Vietnam/Thailand/Indonesia/Malaysia',
+            comparisonTitle: '原圖 VS AI實景 降維打擊',
+            comparisonTip: '👈 左右拖動對比，左Before、右After 👉',
+            benefitsTitle: '為什麼華人賣家選 Corelinkbase',
+            benefit1: '零實拍成本，24H交付：不用模特、不用場地，上新節奏快。',
+            benefit2: '純正東南亞本土氛圍：不踩文化雷，轉化更高。',
+            benefit3: '🔥 一國原圖，多國場景：一次出越/泰/印尼多套圖，鋪貨更省。',
+            benefit4: '免費水印預覽，滿意再付：零風險，先看效果。',
+            trustBadge: '🛡️ 服務覆蓋越/泰/馬/印尼華人跨境商家',
+            pricingTitle: '無門檻階梯報價',
+            pricingSubtitle: '小鋪到大店都適配',
+            package1: '體驗套組',
+            package1Tag: '新手首選',
+            package1Price: '$24.99 <span>/ 3張</span>',
+            package1Feature1: '3張不同場景',
+            package1Feature2: '指定1個國家',
+            package1Feature3: '3天內交付',
+            package2: '批量套組',
+            package2Tag: '鋪貨性價比',
+            package2Price: '$75 <span>/ 10張</span>',
+            package2Feature1: '10張場景',
+            package2Feature2: '越/泰/印尼混搭',
+            package2Feature3: '48小時交付',
+            package3: '包月套組',
+            package3Tag: '精品店',
+            package3Price: '$199 <span>/ 月</span>',
+            package3Feature1: '30張/月',
+            package3Feature2: '一國多場景',
+            package3Feature3: '24小時交付',
+            package3Feature4: '專屬對接',
+            ctaTitle: '直接看你的產品效果！',
+            ctaDesc: '發白底圖，24h內免費水印預覽，零預付',
+            ctaEmail: '發送產品圖至：',
+            ctaNote: '備註：品類+國家（如：拖鞋+越南街頭）',
+            footer: '&copy; 2026 Corelinkbase | contact@corelinkbase.com'
+        },
+        'en': {
+            heroTitle: "Don't let <span>white background images</span> ruin your Shopee click-through rate!",
+            heroDesc: 'Shopee/TikTok white background images are oversaturated, local real photos are expensive? AI generates Vietnamese/Thai/Indonesian local scenes with one click, free watermark preview, pay only when satisfied.',
+            heroSubtitle: 'Serving Chinese sellers in Vietnam/Thailand/Indonesia/Malaysia',
+            comparisonTitle: 'Original VS AI Real Scenes - Game Changer',
+            comparisonTip: '👈 Drag to compare, left Before, right After 👉',
+            benefitsTitle: 'Why Chinese sellers choose Corelinkbase',
+            benefit1: 'Zero photography cost, 24H delivery: No models, no venues, faster product updates.',
+            benefit2: 'Authentic Southeast Asian local atmosphere: No cultural pitfalls, higher conversion rate.',
+            benefit3: '🔥 One country original, multiple country scenes: Generate multiple sets for Vietnam/Thailand/Indonesia at once, save more on product listings.',
+            benefit4: 'Free watermark preview, pay only when satisfied: Zero risk, see results first.',
+            trustBadge: '🛡️ Serving Chinese cross-border sellers in Vietnam/Thailand/Malaysia/Indonesia',
+            pricingTitle: 'No Threshold Tiered Pricing',
+            pricingSubtitle: 'Suitable for small shops to large stores',
+            package1: 'Trial Package',
+            package1Tag: 'Beginner\'s Choice',
+            package1Price: '$24.99 <span>/ 3 images</span>',
+            package1Feature1: '3 different scenes',
+            package1Feature2: 'Specify 1 country',
+            package1Feature3: 'Delivered within 3 days',
+            package2: 'Bulk Package',
+            package2Tag: 'Listing Value',
+            package2Price: '$75 <span>/ 10 images</span>',
+            package2Feature1: '10 scenes',
+            package2Feature2: 'Mixed Vietnam/Thailand/Indonesia',
+            package2Feature3: 'Delivered within 48 hours',
+            package3: 'Monthly Package',
+            package3Tag: 'Premium Store',
+            package3Price: '$199 <span>/ month</span>',
+            package3Feature1: '30 images/month',
+            package3Feature2: 'Multiple scenes in one country',
+            package3Feature3: 'Delivered within 24 hours',
+            package3Feature4: 'Dedicated contact',
+            ctaTitle: 'See your product effect directly!',
+            ctaDesc: 'Send white background image, get free watermark preview within 24h, no prepayment',
+            ctaEmail: 'Send product image to:',
+            ctaNote: 'Note: Product category + Country (e.g.: Slippers + Vietnam street)',
+            footer: '&copy; 2026 Corelinkbase | contact@corelinkbase.com'
+        },
+        'vi': {
+            heroTitle: 'Đừng để <span>ảnh nền trắng</span> phá hủy tỷ lệ nhấp chuột Shopee của bạn!',
+            heroDesc: 'Shopee/TikTok ảnh nền trắng quá nhiều, chụp ảnh thực địa đắt? AI tạo cảnh Việt/Tây/Indonesia bản địa chỉ với một cú nhấp, xem trước ảnh có watermark miễn phí, chỉ trả tiền khi hài lòng.',
+            heroSubtitle: 'Dịch vụ cho người bán Trung Quốc tại Việt Nam/Thái Lan/Indonesia/Malaysia',
+            comparisonTitle: 'Ảnh gốc VS AI cảnh thực - Giảm chiều tấn công',
+            comparisonTip: '👈 Kéo để so sánh, trái Before, phải After 👉',
+            benefitsTitle: 'Tại sao người bán Trung Quốc chọn Corelinkbase',
+            benefit1: 'Chi phí chụp ảnh bằng không, giao hàng 24H: Không cần người mẫu, không cần địa điểm, cập nhật sản phẩm nhanh hơn.',
+            benefit2: 'Bầu không khí bản địa Đông Nam Á chân thực: Không vấp phải rủi ro văn hóa, tỷ lệ chuyển đổi cao hơn.',
+            benefit3: '🔥 Một ảnh gốc, nhiều cảnh đa quốc gia: Tạo nhiều bộ ảnh cho Việt/Tây/Indonesia cùng lúc, tiết kiệm hơn khi đăng sản phẩm.',
+            benefit4: 'Xem trước ảnh có watermark miễn phí, trả tiền khi hài lòng: Không rủi ro, xem kết quả trước.',
+            trustBadge: '🛡️ Dịch vụ cho người bán xuyên biên giới Trung Quốc tại Việt Nam/Thái Lan/Malaysia/Indonesia',
+            pricingTitle: 'Bảng giá theo bậc không yêu cầu',
+            pricingSubtitle: 'Phù hợp từ cửa hàng nhỏ đến cửa hàng lớn',
+            package1: 'Gói Thử Nghiệm',
+            package1Tag: 'Lựa chọn cho người mới bắt đầu',
+            package1Price: '$24.99 <span>/ 3 ảnh</span>',
+            package1Feature1: '3 cảnh khác nhau',
+            package1Feature2: 'Chỉ định 1 quốc gia',
+            package1Feature3: 'Giao hàng trong 3 ngày',
+            package2: 'Gói Số Lượng Lớn',
+            package2Tag: 'Giá trị đăng sản phẩm',
+            package2Price: '$75 <span>/ 10 ảnh</span>',
+            package2Feature1: '10 cảnh',
+            package2Feature2: 'Kết hợp Việt/Tây/Indonesia',
+            package2Feature3: 'Giao hàng trong 48 giờ',
+            package3: 'Gói Theo Tháng',
+            package3Tag: 'Cửa hàng cao cấp',
+            package3Price: '$199 <span>/ tháng</span>',
+            package3Feature1: '30 ảnh/tháng',
+            package3Feature2: 'Nhiều cảnh trong một quốc gia',
+            package3Feature3: 'Giao hàng trong 24 giờ',
+            package3Feature4: 'Liên hệ riêng',
+            ctaTitle: 'Xem hiệu ứng sản phẩm của bạn ngay!',
+            ctaDesc: 'Gửi ảnh nền trắng, nhận xem trước ảnh có watermark miễn phí trong 24h, không trả trước',
+            ctaEmail: 'Gửi ảnh sản phẩm đến:',
+            ctaNote: 'Ghi chú: Loại sản phẩm + Quốc gia (ví dụ: Giày dép + Phố Việt Nam)',
+            footer: '&copy; 2026 Corelinkbase | contact@corelinkbase.com'
+        },
+        'th': {
+            heroTitle: 'อย่าให้ <span>รูปภาพพื้นหลังสีขาว</span>ทำลายอัตราคลิกของ Shopee ของคุณ!',
+            heroDesc: 'Shopee/TikTok รูปภาพพื้นหลังสีขาวเกินไป, ถ่ายภาพในท้องถิ่นแพง? AI สร้างภาพที่แสดงภาพในประเทศเวียดนาม/ไทย/อินโดนีเซียด้วยคลิกเดียว, ดูตัวอย่างภาพพร้อม Watermark ฟรี, จ่ายเมื่อพอใจ.',
+            heroSubtitle: 'บริการสำหรับผู้ขายชาวจีนในเวียดนาม/ไทย/อินโดนีเซีย/มาเลเซีย',
+            comparisonTitle: 'รูปเดิม VS AI ภาพจริง - การโจมตีหลายมิติ',
+            comparisonTip: '👈 ลากเพื่อเปรียบเทียบ, ซ้าย Before, ขวา After 👉',
+            benefitsTitle: 'ทำไมผู้ขายชาวจีนถึงเลือก Corelinkbase',
+            benefit1: 'ค่าใช้จ่ายในการถ่ายภาพเป็นศูนย์, ส่งภายใน 24 ชั่วโมง: ไม่ต้องแบบจำลอง, ไม่ต้องสถานที่, อัพเดทสินค้าได้เร็วขึ้น.',
+            benefit2: 'บรรยากาศในเอเชียตะวันออกเฉียงใต้ที่แท้จริง: ไม่เสี่ยงต่อวัฒนธรรม, อัตราการแปลงสูงขึ้น.',
+            benefit3: '🔥 รูปเดิมหนึ่งประเทศ, หลายภาพในหลายประเทศ: สร้างหลายชุดภาพสำหรับเวียดนาม/ไทย/อินโดนีเซียพร้อมกัน, ประหยัดในการลงสินค้า.',
+            benefit4: 'ดูตัวอย่างภาพพร้อม Watermark ฟรี, จ่ายเมื่อพอใจ: ไม่มีความเสี่ยง, ดูผลลัพธ์ก่อน.',
+            trustBadge: '🛡️ บริการสำหรับผู้ขายข้ามชาติชาวจีนในเวียดนาม/ไทย/มาเลเซีย/อินโดนีเซีย',
+            pricingTitle: 'ราคาตามระดับไม่มีขั้นต่ำ',
+            pricingSubtitle: 'เหมาะสำหรับร้านขนาดเล็กถึงร้านขนาดใหญ่',
+            package1: 'แพ็คเกจทดลอง',
+            package1Tag: 'เลือกสำหรับผู้เริ่มต้น',
+            package1Price: '$24.99 <span>/ 3 ภาพ</span>',
+            package1Feature1: '3 ภาพในหลายฉาก',
+            package1Feature2: 'ระบุ 1 ประเทศ',
+            package1Feature3: 'ส่งภายใน 3 วัน',
+            package2: 'แพ็คเกจจำนวนมาก',
+            package2Tag: 'คุณภาพการลงสินค้า',
+            package2Price: '$75 <span>/ 10 ภาพ</span>',
+            package2Feature1: '10 ภาพในหลายฉาก',
+            package2Feature2: 'ผสมเวียดนาม/ไทย/อินโดนีเซีย',
+            package2Feature3: 'ส่งภายใน 48 ชั่วโมง',
+            package3: 'แพ็คเกจรายเดือน',
+            package3Tag: 'ร้านค้าคุณภาพ',
+            package3Price: '$199 <span>/ เดือน</span>',
+            package3Feature1: '30 ภาพ/เดือน',
+            package3Feature2: 'หลายฉากในหนึ่งประเทศ',
+            package3Feature3: 'ส่งภายใน 24 ชั่วโมง',
+            package3Feature4: 'ติดต่อเฉพาะ',
+            ctaTitle: 'ดูประสิทธิภาพสินค้าของคุณเลย!',
+            ctaDesc: 'ส่งรูปภาพพื้นหลังสีขาว, รับดูตัวอย่างภาพพร้อม Watermark ฟรีภายใน 24 ชั่วโมง, ไม่ต้องจ่ายล่วงหน้า',
+            ctaEmail: 'ส่งรูปภาพสินค้าไปที่:',
+            ctaNote: 'หมายเหตุ: ประเภทสินค้า + ประเทศ (เช่น: รองเท้า + ถนนเวียดนาม)',
+            footer: '&copy; 2026 Corelinkbase | contact@corelinkbase.com'
+        },
+        'id': {
+            heroTitle: 'Jangan biarkan <span>gambar latar belakang putih</span> merusak tingkat klik Shopee Anda!',
+            heroDesc: 'Shopee/TikTok gambar latar belakang putih terlalu banyak, foto asli lokal mahal? AI membuat pemandangan Vietnam/Thailand/Indonesia asli dengan satu klik, pratinjau watermark gratis, bayar hanya ketika puas.',
+            heroSubtitle: 'Melayani penjual Tionghoa di Vietnam/Thailand/Indonesia/Malaysia',
+            comparisonTitle: 'Gambar Asli VS AI Pemandangan Nyata - Serangan Multi-Dimensi',
+            comparisonTip: '👈 Tarik untuk membandingkan, kiri Before, kanan After 👉',
+            benefitsTitle: 'Mengapa Penjual Tionghoa Memilih Corelinkbase',
+            benefit1: 'Biaya foto nol, pengiriman 24 jam: Tidak perlu model, tidak perlu lokasi, pembaruan produk lebih cepat.',
+            benefit2: 'Atmosfer lokal Asia Tenggara asli: Tidak terjebak dalam risiko budaya, tingkat konversi lebih tinggi.',
+            benefit3: '🔥 Satu gambar asli, banyak pemandangan negara: Buat beberapa set untuk Vietnam/Thailand/Indonesia sekaligus, hemat lebih banyak saat memasang produk.',
+            benefit4: 'Pratinjau watermark gratis, bayar hanya ketika puas: Tanpa risiko, lihat hasilnya dulu.',
+            trustBadge: '🛡️ Melayani penjual lintas batas Tionghoa di Vietnam/Thailand/Malaysia/Indonesia',
+            pricingTitle: 'Harga Berlapis Tanpa Batas',
+            pricingSubtitle: 'Cocok untuk toko kecil hingga toko besar',
+            package1: 'Paket Pengalaman',
+            package1Tag: 'Pilihan Pemula',
+            package1Price: '$24.99 <span>/ 3 gambar</span>',
+            package1Feature1: '3 pemandangan berbeda',
+            package1Feature2: 'Tentukan 1 negara',
+            package1Feature3: 'Dikirim dalam 3 hari',
+            package2: 'Paket Bulk',
+            package2Tag: 'Nilai Penjualan',
+            package2Price: '$75 <span>/ 10 gambar</span>',
+            package2Feature1: '10 pemandangan',
+            package2Feature2: 'Campuran Vietnam/Thailand/Indonesia',
+            package2Feature3: 'Dikirim dalam 48 jam',
+            package3: 'Paket Bulanan',
+            package3Tag: 'Toko Premium',
+            package3Price: '$199 <span>/ bulan</span>',
+            package3Feature1: '30 gambar/bulan',
+            package3Feature2: 'Banyak pemandangan di satu negara',
+            package3Feature3: 'Dikirim dalam 24 jam',
+            package3Feature4: 'Kontak eksklusif',
+            ctaTitle: 'Lihat efek produk Anda sekarang!',
+            ctaDesc: 'Kirim gambar latar belakang putih, dapatkan pratinjau watermark gratis dalam 24 jam, tanpa pembayaran awal',
+            ctaEmail: 'Kirim gambar produk ke:',
+            ctaNote: 'Catatan: Kategori produk + Negara (misalnya: Sandal + Jalan Vietnam)',
+            footer: '&copy; 2026 Corelinkbase | contact@corelinkbase.com'
+        }
+    };
+
+    // 语言切换功能
+    document.addEventListener('DOMContentLoaded', function() {
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const htmlElement = document.documentElement;
+        
+        // 从localStorage获取上次选择的语言，如果没有则使用默认语言
+        const savedLang = localStorage.getItem('selectedLanguage') || 'zh-CN';
+        htmlElement.lang = savedLang;
+        updateActiveButton(savedLang);
+        updateContent(savedLang);
+
+        langButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const lang = this.getAttribute('data-lang');
+                htmlElement.lang = lang;
+                localStorage.setItem('selectedLanguage', lang);
+                updateActiveButton(lang);
+                updateContent(lang);
+            });
+        });
+
+        function updateActiveButton(lang) {
+            langButtons.forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+            });
+        }
+
+        function updateContent(lang) {
+            const trans = translations[lang];
+            if (!trans) return;
+
+            // 更新英雄区域
+            document.querySelector('.hero h1').innerHTML = trans.heroTitle;
+            document.querySelector('.hero p').textContent = trans.heroDesc;
+            document.querySelector('.hero small').textContent = trans.heroSubtitle;
+
+            // 更新对比区域
+            document.querySelector('.comparison-section h2').textContent = trans.comparisonTitle;
+            document.querySelector('.tip').textContent = trans.comparisonTip;
+
+            // 更新优势区域
+            document.querySelector('.benefits h2').textContent = trans.benefitsTitle;
+            const benefitItems = document.querySelectorAll('.benefit-list li');
+            benefitItems[0].innerHTML = `<strong>${trans.benefit1.split(':')[0]}：</strong>${trans.benefit1.split(':')[1]}`;
+            benefitItems[1].innerHTML = `<strong>${trans.benefit2.split(':')[0]}：</strong>${trans.benefit2.split(':')[1]}`;
+            benefitItems[2].innerHTML = `<strong>${trans.benefit3.split('：')[0]}：</strong>${trans.benefit3.split('：')[1]}`;
+            benefitItems[3].innerHTML = `<strong>${trans.benefit4.split('：')[0]}：</strong>${trans.benefit4.split('：')[1]}`;
+            document.querySelector('.trust-badge').textContent = trans.trustBadge;
+
+            // 更新定价区域
+            document.querySelector('.pricing h2').textContent = trans.pricingTitle;
+            document.querySelector('.pricing-subtitle').textContent = trans.pricingSubtitle;
+            
+            // 更新套餐1
+            document.querySelector('.price-card:nth-child(1) h3').innerHTML = `${trans.package1} <span class="tag">${trans.package1Tag}</span>`;
+            document.querySelector('.price-card:nth-child(1) .price').innerHTML = trans.package1Price;
+            const package1Features = document.querySelectorAll('.price-card:nth-child(1) ul li');
+            package1Features[0].textContent = trans.package1Feature1;
+            package1Features[1].textContent = trans.package1Feature2;
+            package1Features[2].textContent = trans.package1Feature3;
+
+            // 更新套餐2
+            document.querySelector('.price-card:nth-child(2) h3').innerHTML = `${trans.package2} <span class="tag">${trans.package2Tag}</span>`;
+            document.querySelector('.price-card:nth-child(2) .price').innerHTML = trans.package2Price;
+            const package2Features = document.querySelectorAll('.price-card:nth-child(2) ul li');
+            package2Features[0].textContent = trans.package2Feature1;
+            package2Features[1].textContent = trans.package2Feature2;
+            package2Features[2].textContent = trans.package2Feature3;
+
+            // 更新套餐3
+            document.querySelector('.price-card:nth-child(3) h3').innerHTML = `${trans.package3} <span class="tag">${trans.package3Tag}</span>`;
+            document.querySelector('.price-card:nth-child(3) .price').innerHTML = trans.package3Price;
+            const package3Features = document.querySelectorAll('.price-card:nth-child(3) ul li');
+            package3Features[0].textContent = trans.package3Feature1;
+            package3Features[1].textContent = trans.package3Feature2;
+            package3Features[2].textContent = trans.package3Feature3;
+            package3Features[3].textContent = trans.package3Feature4;
+
+            // 更新CTA区域
+            document.querySelector('.cta h2').textContent = trans.ctaTitle;
+            document.querySelector('.cta p').textContent = trans.ctaDesc;
+            document.querySelector('.cta-box p').textContent = trans.ctaEmail;
+            document.querySelector('.email-link').textContent = 'contact@corelinkbase.com';
+            document.querySelector('.cta-note').textContent = trans.ctaNote;
+
+            // 更新页脚
+            document.querySelector('.footer p').textContent = trans.footer;
+        }
+    });
+
+    // 滑块功能保持不变
+    document.querySelectorAll('[data-slider]').forEach(wrap => {
+        const afterImg = wrap.querySelector('.after-img');
+        const bar = wrap.querySelector('.slider-bar');
+        const handle = wrap.querySelector('.slider-handle');
+        let isDrag = false;
+
+        function handleMove(e) {
+            if (!isDrag) return;
+            const rect = wrap.getBoundingClientRect();
+            let clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+            let percent = (clientX - rect.left) / rect.width;
+            percent = Math.max(0, Math.min(1, percent));
+
+            afterImg.style.clipPath = `inset(0 0 0 ${percent * 100}%)`;
+            bar.style.left = `${percent * 100}%`;
+            handle.style.left = `${percent * 100}%`;
+        }
+
+        wrap.addEventListener('mousedown', () => isDrag = true);
+        wrap.addEventListener('touchstart', () => isDrag = true);
+        document.addEventListener('mousemove', handleMove);
+        document.addEventListener('touchmove', handleMove);
+        document.addEventListener('mouseup', () => isDrag = false);
+        document.addEventListener('touchend', () => isDrag = false);
+    });
+    </script>
+
+</body>
+</html>
